@@ -4,8 +4,10 @@
 #include <fstream>
 
 #include "configuration.pb.h"
+#include "Logger.h"
 
 using namespace core;
+using namespace CPlusPlusLogging;
 
 bool ConfigurationService::read(const std::string config_file_name) noexcept
 {
@@ -14,9 +16,10 @@ bool ConfigurationService::read(const std::string config_file_name) noexcept
 	std::fstream config_stream(config_file_name,
 			std::ios::in);
 
+	LOG_ERROR("ConfigurationService::read: Specified file could'nt be opend");
 	if (!config_stream)
 	{
-		printf("ConfigurationService::read: Specified file could'nt be opend");
+		LOG_ERROR("ConfigurationService::read: Specified file could'nt be opend");
 		return false;
 	}
 
@@ -24,12 +27,12 @@ bool ConfigurationService::read(const std::string config_file_name) noexcept
 
 	if (configs.ParseFromIstream(&config_stream))
 	{
-		printf("ConfigurationService::read: protobuf couldn't parse input");
+		LOG_ERROR("ConfigurationService::read: protobuf couldn't parse input");
 		return false;
 	}
 
-	server_configuration.server().set_server_address(configs.server_address());
-	server_configuration.server().set_server_port(configs.server_port());
+	server_configuration.set_server_address(configs.server().server_address());
+	server_configuration.set_server_port(configs.server().server_port());
 
 	return true;
 }

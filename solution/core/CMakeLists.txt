@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCE_FILES config_service/ConfigurationService.cpp
-    config_service/ServerConfiguration.cpp)
+    config_service/ServerConfiguration.cpp logging_service/Logger.cpp)
 
 file(GLOB ProtoFiles "protobuf/*.proto")
 
@@ -18,6 +18,7 @@ set(ProtobufIncludePath ${CMAKE_CURRENT_BINARY_DIR}
 add_library(core ${SOURCE_FILES} ${ProtoSources} ${ProtoHeaders})
 target_link_libraries(core ${PROTOBUF_LIBRARY})
 
-target_include_directories(core PUBLIC config_service/ ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(core PUBLIC config_service/ logging_service/
+    ${CMAKE_CURRENT_BINARY_DIR})
 
 
