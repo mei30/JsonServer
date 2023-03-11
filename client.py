@@ -9,8 +9,6 @@ PORT = 2000  # The port used by the server
 data = ""
 with open('sample.json', "r") as fp:
     data = json.load(fp)
-    print(data)
-
     
 
 

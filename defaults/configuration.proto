@@ -1,0 +1,10 @@
+configurations {
+        server {
+	        server_port: 2000
+		server_address: "10.17.2.106"
+	}
+	writer {
+		file_path: "./files"
+		queue_size: 1000
+	}
+}

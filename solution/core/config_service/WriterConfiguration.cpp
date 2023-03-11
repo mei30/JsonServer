@@ -1,21 +1,25 @@
 #include "WriterConfiguration.h"
 
 #include <filesystem>
+#include <iostream>
 
 using namespace core;
 
 void WriterConfiguratin::validate()
 {
+	printf("validdd\n");
 	if (path.empty())
-		std::runtime_error("Directory path is invalid");
+		throw std::runtime_error("Directory path is invalid");
 
+	std::cout << path;
 	if (!std::filesystem::exists(path))
-		std::runtime_error("Directory path is not exist");
+		throw std::runtime_error("Directory path is not exist");
 }
 
 void WriterConfiguratin::set_path(const std::string &path)
 {
 	this->path = path;
+	validate();
 }
 
 void WriterConfiguratin::set_queue_size(uint16_t queue_size)

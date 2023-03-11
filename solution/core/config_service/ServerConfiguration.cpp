@@ -23,7 +23,7 @@ void ServerConfiguration::validate()
 			"^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)(\\.(?!$)|$)){4}$");
 
 	if (!std::regex_search(address, ip_regex))
-		std::runtime_error(
+		throw std::runtime_error(
 					"Entered IP address is invalid Please proivde valid IP Address");
 }
 
