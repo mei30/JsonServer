@@ -6,7 +6,7 @@
 #include "Logger.h"
 
 using namespace std;
-using namespace CPlusPlusLogging;
+using namespace core::CPlusPlusLogging;
 
 Logger* Logger::m_Instance = 0;
 
@@ -18,36 +18,11 @@ Logger::Logger()
    m_File.open(logFileName.c_str(), ios::out|ios::app);
    m_LogLevel	= LOG_LEVEL_TRACE;
    m_LogType	= FILE_LOG;
-
-   // Initialize mutex
-#ifdef WIN32
-   InitializeCriticalSection(&m_Mutex);
-#else
-   int ret=0;
-   ret = pthread_mutexattr_settype(&m_Attr, PTHREAD_MUTEX_ERRORCHECK_NP);
-   if(ret != 0)
-   {   
-      printf("Logger::Logger() -- Mutex attribute not initialize!!\n");
-      exit(0);
-   }   
-   ret = pthread_mutex_init(&m_Mutex,&m_Attr);
-   if(ret != 0)
-   {   
-      printf("Logger::Logger() -- Mutex not initialize!!\n");
-      exit(0);
-   }   
-#endif
 }
 
 Logger::~Logger()
 {
    m_File.close();
-#ifdef WIN32
-   DeleteCriticalSection(&m_Mutex);
-#else
-   pthread_mutexattr_destroy(&m_Attr);
-   pthread_mutex_destroy(&m_Mutex);
-#endif
 }
 
 Logger* Logger::getInstance() throw ()
@@ -59,29 +34,10 @@ Logger* Logger::getInstance() throw ()
    return m_Instance;
 }
 
-void Logger::lock()
-{
-#ifdef WIN32
-   EnterCriticalSection(&m_Mutex);
-#else
-   pthread_mutex_lock(&m_Mutex);
-#endif
-}
-
-void Logger::unlock()
-{
-#ifdef WIN32
-   LeaveCriticalSection(&m_Mutex);
-#else
-   pthread_mutex_unlock(&m_Mutex);
-#endif
-}
-
 void Logger::logIntoFile(std::string& data)
 {
-   lock();
+   std::lock_guard<std::mutex> lock(mutex);
    m_File << getCurrentTime() << "  " << data << endl;
-   unlock();
 }
 
 void Logger::logOnConsole(std::string& data)
@@ -196,9 +152,8 @@ void Logger::buffer(const char* text) throw()
    // and timestamp in the buffer message. Just log the raw bytes.
    if((m_LogType == FILE_LOG) && (m_LogLevel >= LOG_LEVEL_BUFFER))
    {
-      lock();
-      m_File << text << endl;
-      unlock();
+	  std::lock_guard<std::mutex> lock(mutex);
+	  m_File << text << endl;
    }
    else if((m_LogType == CONSOLE) && (m_LogLevel >= LOG_LEVEL_BUFFER))
    {

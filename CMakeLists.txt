@@ -11,11 +11,19 @@ set(APP_BINARY_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 find_package(Protobuf REQUIRED)
 if (Protobuf_FOUND)
-    message("Hey your protobuf installed successfully")
+    message("Protobuf found")
 elseif()
     message(FATAL_ERROR "Please install Protobuf package.")
 endif()
 
+find_package(Boost)
+if (Protobuf_FOUND)
+    message("Boost found")
+elseif()
+    message(FATAL_ERROR "Please install Boost package.")
+endif()
+
+find_package (Threads)
 
 enable_testing()
 
@@ -25,8 +33,7 @@ add_subdirectory(tests)
 add_executable(algorithmic_questions_ground main.cpp)
 
 target_include_directories(algorithmic_questions_ground PRIVATE
-       ${SOLUTION_LIBRARY_INCLUDE_DIRECTORY}/server
-       ${SOLUTION_LIBRARY_INCLUDE_DIRECTORY}/core/config_service)
+       ${SOLUTION_LIBRARY_INCLUDE_DIRECTORY}/server ${CoreIncludePath})
 
 target_link_libraries(algorithmic_questions_ground PRIVATE server)
 

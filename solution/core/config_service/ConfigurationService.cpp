@@ -16,7 +16,6 @@ bool ConfigurationService::read(const std::string config_file_name) noexcept
 	std::fstream config_stream(config_file_name,
 			std::ios::in);
 
-	LOG_ERROR("ConfigurationService::read: Specified file could'nt be opend");
 	if (!config_stream)
 	{
 		LOG_ERROR("ConfigurationService::read: Specified file could'nt be opend");
@@ -33,6 +32,8 @@ bool ConfigurationService::read(const std::string config_file_name) noexcept
 
 	server_configuration.set_server_address(configs.server().server_address());
 	server_configuration.set_server_port(configs.server().server_port());
+	writer_configuration.set_path(configs.writer().file_path());
+	writer_configuration.set_queue_size(configs.writer().queue_size());
 
 	return true;
 }
@@ -40,4 +41,9 @@ bool ConfigurationService::read(const std::string config_file_name) noexcept
 const ServerConfiguration &ConfigurationService::get_server_configuration() const noexcept
 {
 	return server_configuration;
+}
+
+const WriterConfiguratin &ConfigurationService::get_writer_configuration() const noexcept
+{
+	return writer_configuration;
 }

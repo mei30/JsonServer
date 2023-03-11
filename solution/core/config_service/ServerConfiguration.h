@@ -27,6 +27,9 @@ public:
 	void set_server_address(const std::string& address);
 	void set_server_port(uint16_t port);
 
+	uint16_t get_server_port() const noexcept;
+	std::string get_server_address() const noexcept;
+
 private:
 	int16_t port;
 	std::string address;

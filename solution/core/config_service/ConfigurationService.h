@@ -6,16 +6,13 @@
 #include <tuple>
 
 #include "ServerConfiguration.h"
+#include "WriterConfiguration.h"
 
 namespace core {
 
 class ConfigurationService
 {
 public:
-//	using LogMessage = std::tuple<google::protobuf::LogLevel, std::string, int,
-//			std::string>;  // C++11
-//	using LogStack = std::list<LogMessage>;
-
 	ConfigurationService() = default;
 
 	ConfigurationService(const ConfigurationService& other) = default;
@@ -29,9 +26,11 @@ public:
 	bool read(const std::string config_file_name) noexcept;
 
 	const ServerConfiguration& get_server_configuration() const noexcept;
+	const WriterConfiguratin& get_writer_configuration() const noexcept;
 
 private:
 	ServerConfiguration server_configuration;
+	WriterConfiguratin writer_configuration;
 };
 
 

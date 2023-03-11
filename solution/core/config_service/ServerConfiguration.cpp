@@ -37,3 +37,13 @@ void ServerConfiguration::set_server_port(uint16_t port)
 {
 	this->port = port;
 }
+
+uint16_t ServerConfiguration::get_server_port() const noexcept
+{
+	return port;
+}
+
+string ServerConfiguration::get_server_address() const noexcept
+{
+	return address;
+}

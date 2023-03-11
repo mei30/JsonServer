@@ -8,6 +8,14 @@ message Server {
 	optional string server_address = 2 [default = "127.0.0.1"];
 }
 
+message Writer
+{
+        optional string file_path = 1 [default = "./files/"];
+	optional int32 queue_size = 2 [default = 1000];
+}
+
 message Configurations {
 	optional Server server = 1;
+	optional Writer writer = 2;
 }
+
