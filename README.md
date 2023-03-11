@@ -23,7 +23,7 @@ make
 ```
 
 # Notes
-*The project config files must be placed next to the executable file. There is a **defaults** folder that contains defalut configs of server. To run the program correctly, you need to copy the contents of this folder next to the executable file.
+* The project config files must be placed next to the executable file. There is a **defaults** folder that contains defalut configs of server. To run the program correctly, you need to copy the contents of this folder next to the executable file.
 
 * The log files are placed next to the executable file of the server named **server_logs.log**.
 
