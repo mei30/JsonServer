@@ -30,12 +30,12 @@ enable_testing()
 add_subdirectory(solution)
 add_subdirectory(tests)
 
-add_executable(algorithmic_questions_ground main.cpp)
+add_executable(simple_server main.cpp)
 
-target_include_directories(algorithmic_questions_ground PRIVATE
+target_include_directories(simple_server PRIVATE
        ${SOLUTION_LIBRARY_INCLUDE_DIRECTORY}/server ${CoreIncludePath})
 
-target_link_libraries(algorithmic_questions_ground PRIVATE server)
+target_link_libraries(simple_server PRIVATE server)
 
-install(TARGETS algorithmic_questions_ground
+install(TARGETS simple_server
                 DESTINATION ${APP_BINARY_DIRECTORY})
